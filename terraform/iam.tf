@@ -1,5 +1,7 @@
-resource "aws_iam_role" "ssm_role" {
-  name = "ssm_role"
+// SSM IAM Role and Policies
+resource "aws_iam_role" "ssm_role_use" {
+  name = "ssm_roletfssm"
+  provider = aws.use
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -15,13 +17,15 @@ resource "aws_iam_role" "ssm_role" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "ssm_attach" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-  role       = aws_iam_role.ssm_role.name
+resource "aws_iam_instance_profile" "ssm_profile_use" {
+  provider = aws.use
+  name = "ssm_profiletfssm"
+  role = aws_iam_role.ssm_role_use.name
 }
 
-resource "aws_iam_instance_profile" "ssm_profile" {
-  name = "ssm_profile"
-  role = aws_iam_role.ssm_role.name
+resource "aws_iam_role_policy_attachment" "ssm_attach_use" {
+  provider = aws.use
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  role       = aws_iam_role.ssm_role_use.name
 }
 

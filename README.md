@@ -52,3 +52,5 @@ Example:
 ping `<IP address of target EC2 instance>`
 
 ## screenshots are provided in "screenshoots" folder
+
+after screenshots secrets were removed for security reasons.
